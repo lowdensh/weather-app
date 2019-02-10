@@ -1,0 +1,53 @@
+@import '~style/helpers';
+
+.container {
+  border: 1px dashed #ffffff; //white
+	display: flex;
+	flex-direction: column;
+	background-image: url('../../assets/backgrounds/snow-iphone.jpg');
+	color: #666666;
+	width: 414px;
+	height: 736px;
+	text-align: center;
+	padding-top: 80px;
+	margin: 0 auto;
+}
+.header {
+  border: 1px dashed #ff6633; //orange
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+.details {
+  border: 1px solid #66FFFF; //light blue
+	flex: 4;
+}
+.city {
+  border: 1px dotted #ffff00; //yellow
+	flex: 1;
+	font-size: 1.7em;
+	font-weight: 400;
+}
+.conditions {
+  border: 1px solid #ff0000; //red
+	flex: 1;
+	font-size: 1em;
+}
+.temperature {
+  border: 1px dashed #000000; //black
+	flex: 2;
+	margin-top: 0;
+	font-size: 4.8em;
+	font-weight: 300;
+	letter-spacing: -6px;
+}
+.filled:after {
+  border: 1px dashed #00ff33; //green
+	content: "°";
+	margin: 0 0 0 1rem;
+	font-size: 0.5em;
+	font-weight: 100;
+	display: inline-block;
+	padding-top: 10px;
+	vertical-align: top;
+}
