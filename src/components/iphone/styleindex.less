@@ -1,29 +1,35 @@
 @import '~style/helpers';
 
 .container {
-  border: 1px dashed #ffffff; //white
+  border: 1px dashed #000; //black
 	display: flex;
 	flex-direction: column;
 	background-image: url('../../assets/backgrounds/snow-iphone.jpg');
-	color: #666666;
+	color: #666666; //this is the font color
 	width: 414px;
 	height: 736px;
 	text-align: center;
-	padding-top: 80px;
 	margin: 0 auto;
 }
-.header {
-  border: 1px dashed #ff6633; //orange
+.navbox {
+  border: 1px dashed #ff0000; //red
+	flex: 0 0 150px;
+  justify-content: center;
+	padding: 10px 0 0 0;
+}
+.spacer {
+  border: 1px dashed #ff0000; //red
+	flex: 0 0 80px;
+}
+.weatherbox {
+  border: 1px dashed #ff6600; //orange
+  background-color: #ff6600; //orange
 	display: flex;
 	flex-direction: column;
-	flex: 1;
-}
-.details {
-  border: 1px solid #66FFFF; //light blue
-	flex: 4;
+	height: 50%;
 }
 .city {
-  border: 1px dotted #ffff00; //yellow
+  border: 1px solid #ffcc00; //yellow
 	flex: 1;
 	font-size: 1.7em;
 	font-weight: 400;
@@ -50,4 +56,12 @@
 	display: inline-block;
 	padding-top: 10px;
 	vertical-align: top;
+}
+.tubefavbox {
+  border: 1px dashed #ff0000; //red
+	height: 150px;
+}
+.details {
+  border: 1px solid #0099FF; //light blue
+	flex: 4;
 }

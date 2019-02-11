@@ -42,10 +42,22 @@ export default class Iphone extends Component {
 		// display all weather data
 		return (
 			<div class={ style.container }>
-				<div class={ style.header }>
+				<div class={ style.navbox }>
+					<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Circle_-_black_simple.svg/500px-Circle_-_black_simple.svg.png" height="15" width="15" />
+					<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Circle_-_black_simple.svg/500px-Circle_-_black_simple.svg.png" height="15" width="15" />
+					<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Circle_-_black_simple.svg/500px-Circle_-_black_simple.svg.png" height="15" width="15" />
+				</div>
+				<div class={ style.spacer }>
+					hello!<br />
+					just a bunch of space here!
+				</div>
+				<div class={ style.weatherbox }>
 					<div class={ style.city }>{ this.state.locate }</div>
 					<div class={ style.conditions }>{ this.state.cond }</div>
 					<span class={ tempStyles }>{ this.state.temp }</span>
+				</div>
+				<div class={ style.tubefavbox }>
+					favourites tube lines here!
 				</div>
 				<div class={ style.details }></div>
 				<div class= { style_iphone.container }>
