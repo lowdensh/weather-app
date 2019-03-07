@@ -9,20 +9,25 @@ export default class TubeStatusPage extends Component {
 
 	constructor(props){
 		super(props);
+		//generates local storage to allow user to store their favorite tube lines
 		if(localStorage.getItem("favel1") == null){
 			localStorage.setItem("favel1",-1)
 		}
 		if(localStorage.getItem("favel2") == null){
 			localStorage.setItem("favel2",-1)
 		}
+		//if there is an issue where the total number of lines is less than 0 it will reset the favorited
 		if(localStorage.getItem("tfavLines") == null || localStorage.getItem('tfavLines') < 0){
 			localStorage.setItem("tfavLines",0)
 			localStorage.setItem("favel1",-1)
 			localStorage.setItem("favel2",-1)
 		}
+		//gets the tube stats date from the tfl api
 		this.fetchTrainData();
 	}
 
+	//creates the tube lines in html format so that it give it the
+	//correct inforamtion e.g. the name will have the correct style
 	createDivs= () =>{
 
 		let drawline = []
@@ -42,6 +47,7 @@ export default class TubeStatusPage extends Component {
 		return drawline
 	}
 
+	//makes the star filled if it is favorited
 	filStart=(data)=>{
 		for(let i =0;i<2;i++){
 			if(data == this.listFaves(i))
@@ -52,12 +58,14 @@ export default class TubeStatusPage extends Component {
 		return style.addFavourite;
 	}
 
+	//returns the favorite depending on the number taken in
 	listFaves = (num) => {
 		switch (num) {
 			case 0: return localStorage.getItem('favel1');
 			case 1: return localStorage.getItem('favel2');
 		}
 	}
+	//assignes the favorite tube line depending on the number and the value store the tube line
 	assigneto = (num,val)=>{
 		switch (num) {
 			case 0: localStorage.setItem('favel1',val);break;
@@ -66,6 +74,8 @@ export default class TubeStatusPage extends Component {
 		}
 	}
 
+	//checks the name of the current station to see if its already in the favorites
+	//and if it is it removes it finishing by returning false otherwise it will return true
 	checkName = (nameOfStaytion) => {
 		for(let i = 0;i < 2;i++){
 			if(nameOfStaytion == this.listFaves(i)){
@@ -82,6 +92,8 @@ export default class TubeStatusPage extends Component {
 		return true
 	}
 
+	//assignes the tube to the favorites  if checkName returns true otherwise
+	//updates the favourites in all pages its present in
 	updateFaves = (lName) => () => {
 		if(this.checkName(lName)){
 			for(let i = 0;i < 2;i++){
@@ -93,14 +105,17 @@ export default class TubeStatusPage extends Component {
 			}
 		}
 		this.updateFave();
-    location.reload(true);
+   	location.reload(true);
 	}
 
+	//handles the visual update of the favourites
 	updateFave= ()=>{
-		let cake = this.createFavs();
-		this.setState({faveLocation:cake});
+		let faveLayout = this.createFavs();
+		this.setState({faveLocation:faveLayout});
 	}
 
+
+	//creates the html code for the favourite tube lines
 	createFavs= () =>{
 
 		let drawline = []
@@ -119,6 +134,8 @@ export default class TubeStatusPage extends Component {
 				</div>
 			)
 		}
+
+		//stores the html allowin so that it can be used in the CurrentWeatherPage
 		localStorage.setItem("FaveHtml",JSON.stringify(drawline));
 		return drawline;
 	}
@@ -154,26 +171,31 @@ export default class TubeStatusPage extends Component {
 			this.setState({[Lnamee]:lineName[i]});
 			this.setState({[Lstats]:lineStats[i]});
 		}
+
 		this.updateFave();
 	}
 
+
+	//assignes the correct state to the correct line
 	containerName= (data) =>{
 		switch (data) {
 			case "Bakerloo"			     	: return this.state.contBakerLoo;
 			case "Central"				   	: return this.state.contcentral;
 			case "Circle"				    	: return this.state.contcircle;
 			case "District"			     	: return this.state.contdistrict;
-			case "Hammersmith & City"	: return this.state.conthamerACity;
-			case "Jubilee"			  		: return this.state.contjubilee;
+			case "Hammersmith & City"		: return this.state.conthamerACity;
+			case "Jubilee"			  			: return this.state.contjubilee;
 			case "Metropolitan"  			: return this.state.contmetropolitan;
 			case "Northern"		    		: return this.state.contnorthern;
 			case "Piccadilly"	   			: return this.state.contpiccadilly;
 			case "Victoria"			     	: return this.state.contvictoria;
-			case "Waterloo & City"		: return this.state.contwaterCity;
+			case "Waterloo & City"			: return this.state.contwaterCity;
 			default:
-			return "be what its not ment to be"
+			return "error"
 		}
 	}
+
+	//assigns the correct lineN to each tube line
 	returnName= (n) =>{
 		switch (n) {
 			case 0:	return this.state.lineN0;
@@ -193,6 +215,8 @@ export default class TubeStatusPage extends Component {
 		}
 		return "dam"
 	}
+
+	//assigns the correct lineS to each tube line
 	returnServStat= (n) =>{
 		switch (n) {
 			case 0:	return this.state.lineS0;
@@ -207,27 +231,31 @@ export default class TubeStatusPage extends Component {
 			case 9:	return this.state.lineS9;
 			case 10:	return this.state.lineS10;
 			default:
-			return "be thy name"
+			return "error"
 			break;
 		}
 	}
+
+	//returns the correct style for the each tube line
 	decideNameCol = (data) => {
 		switch (data) {
 			case "Bakerloo"			     	: return style.bakerloo;
 			case "Central"				   	: return style.central;
 			case "Circle"				    	: return style.circle;
 			case "District"			     	: return style.district;
-			case "Hammersmith & City"	: return style.hammersmith;
-			case "Jubilee"					  : return style.jubilee;
+			case "Hammersmith & City"		: return style.hammersmith;
+			case "Jubilee"						  : return style.jubilee;
 			case "Metropolitan"		   	: return style.metropolitan;
 			case "Northern"			     	: return style.northern;
 			case "Piccadilly"			   	: return style.piccadilly;
 			case "Victoria"			     	: return style.victoria;
-			case "Waterloo & City"		: return style.waterloo;
+			case "Waterloo & City"			: return style.waterloo;
 			default:
-			return "be what its not ment to be"
+			return "error"
 		}
 	}
+
+	//depending on the service it will ither allow the style that returns to be good or bad.
 	decideServiceStyle = (data) => {
 		if (data=="Good Service") {
 			return style.serviceGood;
@@ -236,9 +264,7 @@ export default class TubeStatusPage extends Component {
 		}
 	}
 
-	//<Button title="Go to Details" onPress={() => this.props.navigation.navigate('HomePage')}/>
 	render() {
-		let tfunc = this.props.testFunc;
 
 		return (
 			<div class = { style.container }>

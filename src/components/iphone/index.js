@@ -20,14 +20,14 @@ export default class IPhone extends Component {
 
   render() {
 		return (
+			/*slide function */
 			<Carousel
 			renderCenterLeftControls={null}
 			renderCenterRightControls={null}
 			renderBottomCenterControls={null}
-			//renderTopCenterControls={({ currentSlide }) => (<div>{currentSlide}</div>)}
 			slideIndex = {1}
 			>
-        <TubeStatusPage />
+				<TubeStatusPage />
 				<CurrentWeatherPage />
 				<FutureWeatherPage />
 			</Carousel>

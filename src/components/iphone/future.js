@@ -11,13 +11,10 @@ export default class FutureWeatherPage extends Component {
 		super(props);
 		this.state.temp = "";
 		this.fetchLocationData();
-    var lat = localStorage.getItem("lat");
-    var lon = localStorage.getItem("lon");
-    this.fetchWeatherData(lat, lon);
 	}
 
 	fetchLocationData = () => {
-		var url = "https://api.ipgeolocation.io/ipgeo?apiKey=d1445fb02bb84cf2bd348f8f08b8ef6a";
+		var url = "https://api.ipgeolocation.io/ipgeo?apiKey=5ab600218e9b409794c385e6bdaf7848";
 		$.ajax({
 			url: url,
 			dataType: "json",
@@ -27,24 +24,17 @@ export default class FutureWeatherPage extends Component {
 	}
 
 	parseLocationResponse = (data) => {
-    localStorage.setItem("lat", data["latitude"]);
-    localStorage.setItem("lon", data["longitude"]);
+	 this.fetchWeatherData(data);
 	}
 
-  fetchWeatherData = (userlat, userlon) => {
-
-    // weather forecast by id: Mile End:
-    //var url = "http://api.openweathermap.org/data/2.5/forecast?id=2642541&units=metric&APPID=7d36dffbf1218e01f28b1df7a65231c9";
-
-    // weather forecast by city: London:
-    //var url = "http://api.openweathermap.org/data/2.5/forecast?q=London,uk&units=metric&APPID=7d36dffbf1218e01f28b1df7a65231c9";
+  fetchWeatherData = (data) => {
 
     // weather forecast by lat and lon: current location of the user:
     var url1 = "http://api.openweathermap.org/data/2.5/forecast?lat=";
     var url2 = "&lon=";
     var url3 = "&units=metric&APPID=7d36dffbf1218e01f28b1df7a65231c9";
-    var url = url1.concat(userlat,url2,userlon,url3);
-    //console.log("Weather API call url with lat and lon: " + url);
+	 var url = url1.concat(data["latitude"],url2,data["longitude"]	,url3);
+
 
     $.ajax({
 			url: url,

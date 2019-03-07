@@ -11,42 +11,32 @@ export default class CurrentWeatherPage extends Component {
 		super(props);
 		this.state.temp = "";
 		this.fetchLocationData();
-    var lat = localStorage.getItem("lat");
-    var lon = localStorage.getItem("lon");
-    this.fetchWeatherData(lat, lon);
 	}
+	//https://api.ipgeolocation.io/ipgeo?apiKey=5ab600218e9b409794c385e6bdaf7848
 
 	fetchLocationData = () => {
-		var url = "https://api.ipgeolocation.io/ipgeo?apiKey=d1445fb02bb84cf2bd348f8f08b8ef6a";
+		var url = "https://api.ipgeolocation.io/ipgeo?apiKey=5ab600218e9b409794c385e6bdaf7848";
 		$.ajax({
 			url: url,
 			dataType: "json",
-			success : this.parseLocationResponse,
+			success : this.fetchWeatherData,
 			error : function(req, err){ console.log('Location API call failed: ' + err); }
 		})
 	}
 
 	parseLocationResponse = (data) => {
-    localStorage.setItem("lat", data["latitude"]);
-    localStorage.setItem("lon", data["longitude"]);
+		this.fetchWeatherData(data);
 	}
 
-	fetchWeatherData = (userlat, userlon) => {
+	fetchWeatherData = (data) => {
 
-    // current weather by id: Mile End:
-    //var url = "http://api.openweathermap.org/data/2.5/weather?id=2642541&units=metric&APPID=7d36dffbf1218e01f28b1df7a65231c9";
+		// current weather by lat and lon: current location of the user:
+		var url1 = "http://api.openweathermap.org/data/2.5/weather?lat=";
+		var url2 = "&lon=";
+		var url3 = "&units=metric&APPID=7d36dffbf1218e01f28b1df7a65231c9";
+		var url = url1.concat(data["latitude"],url2,data["longitude"]	,url3);
 
-    // current weather by city: London:
-    //var url = "http://api.openweathermap.org/data/2.5/weather?q=London,uk&units=metric&APPID=7d36dffbf1218e01f28b1df7a65231c9";
-
-    // current weather by lat and lon: current location of the user:
-    var url1 = "http://api.openweathermap.org/data/2.5/weather?lat=";
-    var url2 = "&lon=";
-    var url3 = "&units=metric&APPID=7d36dffbf1218e01f28b1df7a65231c9";
-    var url = url1.concat(userlat,url2,userlon,url3);
-    //console.log("Weather API call url with lat and lon: " + url);
-
-    $.ajax({
+		$.ajax({
 			url: url,
 			dataType: "jsonp",
 			success : this.parseWeatherResponse,
@@ -70,7 +60,9 @@ export default class CurrentWeatherPage extends Component {
 		});
 	}
 
-  // https://openweathermap.org/weather-conditions
+
+
+	// https://openweathermap.org/weather-conditions
 	iconChoice = (id) => {
 		if (id >= 200 && id <= 232) {					//2xx thunderstorm
 			return <img src="../../assets/icons/weather_2_thunderstorm.png"/>
@@ -93,13 +85,15 @@ export default class CurrentWeatherPage extends Component {
 		else if (id >= 801 && id <= 804) {		//80x clouds
 			return <img src="../../assets/icons/weather_8_clouds.png"/>
 		}
-    else {
-      return <img src="../../assets/icons/error.png"/>
-    }
+		else {
+			return <img src="../../assets/icons/error.png"/>
+		}
 	}
+
 
 	render() {
     // check if temperature data is fetched, if so add the sign styling to the page
+	 	//this.state.icon >= 200 && this.state.icon <=804 ? console.log("its all good"):location.reload(true);
 		const tempStyles = this.state.temp ? `${style.ctemp} ${style.cfilled}` : style.ctemp;
 		return (
 			<div class = { style.container }>
@@ -131,6 +125,7 @@ export default class CurrentWeatherPage extends Component {
 
       </div>
 		);
+
 	}
 
 }
